@@ -1,0 +1,10 @@
+# Isolated environment for the official RUCAIBox/UniSRec baseline.
+# On Python 3.12 install RecBole separately with:
+#   pip install --no-deps recbole==1.2.1
+# Its Ray<=2.6.3 dependency is only needed for hyperparameter search and has no
+# Python 3.12 wheel; the training/full-sort evaluation path does not import Ray.
+colorlog==4.7.2
+colorama==0.4.4
+tensorboard>=2.5.0
+thop>=0.1.1.post2207130030
+texttable>=0.9.0

@@ -1,0 +1,52 @@
+schema_version: 1
+selection_policy:
+  hyperparameters_selected_on: validation
+  test_used_for_selection: false
+  seeds: [2026, 2027, 2028]
+  minimum_overall_recall_at_10_retention: 0.97
+
+default_online:
+  name: token_loss_010
+  training_config: configs/v2_final_default.yaml
+  generator:
+    beam_size: 20
+    candidate_count: 20
+    return_count: 10
+    semantic_mmr_weight: 0.0
+  candidate_reranking:
+    enabled: false
+  decision: default
+
+experimental_mild:
+  name: blair_frequency_mild
+  base_model: token_loss_010
+  retrieval:
+    embedding_model: hyp1231/blair-roberta-base
+    candidate_stratum: observed_tail
+    candidate_count: 50
+    exclude_seen_history: true
+    history_only_profile: true
+  reranking:
+    retrieval_weight: 0.25
+    frequency_alpha: 0.10
+    quota_profile: tail_20
+    quota_strength: 0.01
+  decision: experimental_only
+  reason: tail_recall_at_10_delta_student_t_ci_crosses_zero
+
+long_tail_enhancement:
+  name: aggressive_soft_quota
+  base_model: token_loss_010
+  retrieval:
+    embedding_model: hyp1231/blair-roberta-base
+    candidate_stratum: observed_tail
+    candidate_count: 50
+    exclude_seen_history: true
+    history_only_profile: true
+  reranking:
+    retrieval_weight: 0.25
+    frequency_alpha: 0.20
+    quota_profile: balanced
+    quota_strength: 0.05
+  decision: opt_in_long_tail_mode
+  warning: improves tail recall and coverage but degrades overall Recall/NDCG

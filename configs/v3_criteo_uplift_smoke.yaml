@@ -1,0 +1,16 @@
+seed: 2026
+device: cpu
+
+data:
+  path: data/criteo_uplift/raw/criteo-research-uplift-v2.1.csv.gz
+  audit_path: data/criteo_uplift/criteo_uplift_audit.json
+  max_rows: 200000
+
+training:
+  hidden_dims: [128, 64]
+  outcome_epochs: 2
+  effect_epochs: 2
+  batch_size: 2048
+  learning_rate: 0.001
+
+output_dir: artifacts/criteo_uplift_dr_smoke

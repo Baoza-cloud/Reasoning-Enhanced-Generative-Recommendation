@@ -1,0 +1,79 @@
+# Controlled V2 Preference Reasoning architecture retraining.
+# The runner overrides only generator.preference_reasoning_mode and seed.
+# Validation is evaluated during training; Test is evaluated exactly once by the
+# paired Beam-20 harness after all hyperparameters and architecture choices are frozen.
+seed: 2026
+device: cpu
+
+data:
+  category: Musical_Instruments
+  train_path: data/amazon2023/processed/Musical_Instruments/last_out_v2/train.jsonl
+  valid_path: data/amazon2023/processed/Musical_Instruments/last_out_v2/valid.jsonl
+  test_path: data/amazon2023/processed/Musical_Instruments/last_out_v2/test.jsonl
+  item_embeddings_path: data/amazon2023/processed/Musical_Instruments/last_out/item_embeddings_blair.pt
+  data_audit_path: data/amazon2023/processed/Musical_Instruments/last_out_v2/data_audit.json
+  max_train_examples: null
+  max_eval_examples: null
+  train_subset_strategy: prefix
+  train_subset_seed: 2026
+  max_history: 50
+  num_behaviors: 4
+  num_time_buckets: 32
+
+rqvae:
+  hidden_dim: 512
+  code_dim: 32
+  num_levels: 3
+  codebook_size: 256
+  commitment_weight: 0.25
+  epochs: 50
+  batch_size: 1024
+  learning_rate: 0.0001
+  kmeans_init: true
+  kmeans_iters: 20
+  kmeans_sample_size: 20000
+  use_ema: true
+  ema_decay: 0.99
+  ema_epsilon: 0.00001
+  dead_code_threshold: 2.0
+  normalize_reconstruction: true
+  pretrained_artifact_dir: artifacts/amazon2023_musical_instruments_blair_kmeans_ema_v1
+
+generator:
+  model_dim: 128
+  num_heads: 4
+  num_encoder_layers: 2
+  num_decoder_layers: 2
+  feedforward_dim: 512
+  dropout: 0.1
+  short_term_window: 10
+  use_behavior_intensity: true
+  preference_reasoning_mode: full
+  loss_type: global_cross_entropy
+  resume: true
+  epochs: 10
+  batch_size: 128
+  learning_rate: 0.0003
+  log_every_batches: 100
+
+long_tail_training:
+  sampling_alpha: 0.0
+  item_loss_alpha: 0.0
+  token_loss_alpha: 0.1
+  max_weight: 5.0
+  head_fraction: 0.2
+
+quality_gate:
+  min_level_usage_ratio: 0.75
+  min_unique_tuple_ratio: 0.70
+
+evaluation:
+  beam_size: 20
+  candidate_count: 20
+  num_return_sequences: 10
+  diversity_weight: 0.0
+  renormalize_allowed_tokens: false
+  ks: [5, 10]
+  splits: [validation]
+
+output_dir: artifacts/preference_reasoning_retraining_ablation_v1/full/seed_2026

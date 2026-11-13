@@ -1,0 +1,16 @@
+.git
+.github
+.idea
+.vscode
+.venv
+__pycache__
+*.py[cod]
+.pytest_cache
+.ruff_cache
+artifacts
+data
+external
+*.log
+*.tmp
+.DS_Store
+.env

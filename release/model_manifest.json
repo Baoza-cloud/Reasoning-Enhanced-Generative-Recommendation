@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "release": "v2.4-seed2026",
+  "model": "token_loss_010",
+  "seed": 2026,
+  "dataset": "Amazon Reviews 2023 / Musical Instruments",
+  "catalog_items": 24587,
+  "semantic_id": {
+    "rq_levels": 3,
+    "codebook_size": 256,
+    "sequence_length": 4
+  },
+  "files": [
+    {
+      "name": "generator.pt",
+      "bytes": 4523151,
+      "sha256": "faa978cae57ec5ce724a671e063049589a72ebe9bb6549ba7a85c2ead4c7fd2f"
+    },
+    {
+      "name": "catalog.json",
+      "bytes": 1809543,
+      "sha256": "c888ecd4edcc12fc4700c45ad242f4125ea6f34fae491c3a629df1a3602a4acd"
+    }
+  ],
+  "required_config": "configs/v2_final_default.yaml",
+  "long_tail_assets_included": false,
+  "notes": "BLaIR item embeddings and Amazon data are not redistributed; generate them with docs/DATA_AND_MODEL_SETUP.md."
+}

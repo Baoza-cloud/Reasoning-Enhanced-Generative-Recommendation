@@ -1,0 +1,56 @@
+seed: 2026
+device: cpu
+
+data:
+  category: Musical_Instruments
+  train_path: data/amazon2023/processed/Musical_Instruments/last_out/train.jsonl
+  valid_path: data/amazon2023/processed/Musical_Instruments/last_out/valid.jsonl
+  test_path: data/amazon2023/processed/Musical_Instruments/last_out/test.jsonl
+  item_embeddings_path: data/amazon2023/processed/Musical_Instruments/last_out/item_embeddings_blair.pt
+  data_audit_path: data/amazon2023/processed/Musical_Instruments/last_out/data_audit.json
+  max_train_examples: null
+  max_eval_examples: null
+  max_history: 50
+  num_behaviors: 2
+  num_time_buckets: 32
+
+rqvae:
+  hidden_dim: 512
+  code_dim: 32
+  num_levels: 3
+  codebook_size: 256
+  commitment_weight: 0.25
+  epochs: 50
+  batch_size: 1024
+  learning_rate: 0.0001
+  kmeans_init: true
+  kmeans_iters: 20
+  kmeans_sample_size: 20000
+  use_ema: true
+  ema_decay: 0.99
+  ema_epsilon: 0.00001
+  dead_code_threshold: 2.0
+  normalize_reconstruction: true
+
+generator:
+  model_dim: 128
+  num_heads: 4
+  num_encoder_layers: 2
+  num_decoder_layers: 2
+  feedforward_dim: 512
+  dropout: 0.1
+  short_term_window: 10
+  epochs: 10
+  batch_size: 128
+  learning_rate: 0.0003
+  log_every_batches: 250
+
+quality_gate:
+  min_level_usage_ratio: 0.75
+  min_unique_tuple_ratio: 0.70
+
+evaluation:
+  beam_size: 10
+  ks: [5, 10]
+
+output_dir: artifacts/amazon2023_musical_instruments_blair_kmeans_ema_v1

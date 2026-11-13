@@ -1,0 +1,23 @@
+data:
+  path: data/criteo_uplift/raw/criteo-research-uplift-v2.1.csv.gz
+  audit_path: data/criteo_uplift/criteo_uplift_audit.json
+  max_rows: 100000
+  sample_seed: 2026
+  split_seed: 1701
+  sample_cache_path: artifacts/v3_lite_smoke/sample.pt
+
+training:
+  seeds: [2026]
+  cross_fitting_folds: 2
+  max_iter: 3
+  alpha: 0.0001
+
+evaluation:
+  fractions: [0.01, 0.05, 0.10, 0.20, 0.50]
+  policy_top_fraction: 0.10
+  uplift_weights: [0.0, 0.1, 0.25, 0.5, 1.0]
+  bootstrap_samples: 20
+  bootstrap_seed: 8026
+
+amazon_readiness_path: artifacts/causal_readiness_amazon2023.json
+output_dir: artifacts/v3_lite_smoke

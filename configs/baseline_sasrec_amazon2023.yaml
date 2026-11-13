@@ -1,0 +1,30 @@
+seed: 2026
+device: cpu
+
+data:
+  category: Musical_Instruments
+  train_path: data/amazon2023/processed/Musical_Instruments/last_out/train.jsonl
+  valid_path: data/amazon2023/processed/Musical_Instruments/last_out/valid.jsonl
+  test_path: data/amazon2023/processed/Musical_Instruments/last_out/test.jsonl
+  data_audit_path: data/amazon2023/processed/Musical_Instruments/last_out/data_audit.json
+  catalog_path: artifacts/amazon2023_musical_instruments_blair_kmeans_ema_v1/catalog.json
+  max_train_examples: null
+  max_eval_examples: null
+  max_history: 50
+
+model:
+  model_dim: 128
+  num_heads: 4
+  num_layers: 2
+  feedforward_dim: 512
+  dropout: 0.1
+  epochs: 10
+  batch_size: 128
+  learning_rate: 0.0003
+  log_every_batches: 250
+  resume: true
+
+evaluation:
+  ks: [5, 10]
+
+output_dir: artifacts/amazon2023_musical_instruments_sasrec

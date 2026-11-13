@@ -1,0 +1,34 @@
+seed: 2026
+device: cpu
+
+data:
+  num_items: 48
+  num_users: 32
+  item_embedding_dim: 24
+  num_behaviors: 6
+  num_time_buckets: 16
+  min_history: 3
+  max_history: 8
+
+rqvae:
+  hidden_dim: 48
+  code_dim: 16
+  num_levels: 3
+  codebook_size: 8
+  commitment_weight: 0.25
+  epochs: 4
+  learning_rate: 0.003
+
+generator:
+  model_dim: 32
+  num_heads: 4
+  num_encoder_layers: 2
+  num_decoder_layers: 2
+  feedforward_dim: 64
+  dropout: 0.0
+  short_term_window: 3
+  epochs: 3
+  batch_size: 8
+  learning_rate: 0.002
+
+output_dir: artifacts/smoke
